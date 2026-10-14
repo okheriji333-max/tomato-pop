@@ -166,14 +166,17 @@
     <div class="tomatoes-area" id="tomatoContainer"></div>
   </div>
 
-  <!-- Audio asset (placed in repo root as pop.mp3) -->
-  <audio id="popAudio" src="pop.mp3" preload="auto"></audio>
-
   <script>
     const container = document.getElementById('tomatoContainer');
-    const popAudio = document.getElementById('popAudio');
     const subtext = document.getElementById('subtext');
     const redirectUrl = "https://www.instagram.com/omar_kheriji_engineering_rep/";
+
+    // Preload the three pop sound files
+    const popAudioFiles = [
+      new Audio('pop1.mp3'),
+      new Audio('pop2.mp3'),
+      new Audio('pop3.mp3')
+    ];
 
     const count = Math.floor(Math.random() * (30 - 10 + 1)) + 10;
     let remaining = count;
@@ -181,13 +184,14 @@
     const center = 125;
 
     function playPopSound() {
-      if (popAudio) {
-        // Clone or clone-play allows overlapping rapid taps without audio clipping
-        const sound = popAudio.cloneNode();
-        // Subtle random pitch variation between 0.9x and 1.15x
-        sound.playbackRate = 0.9 + Math.random() * 0.25;
-        sound.play().catch(() => {});
-      }
+      // Pick a random track from the 3 files
+      const randomIndex = Math.floor(Math.random() * popAudioFiles.length);
+      const chosenTrack = popAudioFiles[randomIndex];
+
+      // Clone node to allow rapid, overlapping clicks
+      const sound = chosenTrack.cloneNode();
+      sound.playbackRate = 0.95 + Math.random() * 0.15;
+      sound.play().catch(() => {});
     }
 
     function triggerHaptic() {
